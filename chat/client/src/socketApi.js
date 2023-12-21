@@ -14,3 +14,35 @@ export const init = () => {
         console.log('Disconnected')
     })
 }
+
+export const sendMessage = (message) =>{
+    if(socket){
+        socket.emit('new-message',message);
+    }
+}
+
+
+export const subscribeChat = (callback) =>{
+
+    if(!socket){
+        return
+    }
+
+    socket.on('receive-message',(message)=>{
+        callback(message);
+    })
+    
+}
+
+
+export const subscribeInitialMessages = (callback) =>{
+    if(!socket){
+        return
+    }
+
+    socket.on('message-list',(message)=>{
+        console.log("initial")
+        callback(message);
+    })
+
+}
